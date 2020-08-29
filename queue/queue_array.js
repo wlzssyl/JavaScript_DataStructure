@@ -25,3 +25,22 @@ class queueArr {
   }
 
 }
+/**击鼓传花********************************************** */
+//nameList为名字数组，num为数的数字
+function passGame(nameList, num) {
+  const queue = new queueArr();
+  for(let i=0; i<nameList.length; i++){
+    queue.enqueue(nameList[i]);
+  }
+  //根据数字讲前面没书到数字的人出队，并同时加到队尾
+  while(queue.size() > 1){
+    for(let i=0; i<num-1; i++){
+      queue.enqueue(queue.dequeue());
+    }
+    queue.dequeue();   //将num对应的人出队
+  }
+  return queue.front();
+}
+
+const name = [1,2,3,4,5,6];
+console.log(passGame(name, 1));
