@@ -23,8 +23,38 @@ class queueArr {
   size() {
     return this.array.length;
   }
-
 }
+
+//优先级队列
+class queueElement {
+  constructor(element, priority) {
+    this.element = element;
+    this.priority = priority;
+  }
+}
+class priorityQueue extends queueArr {
+  enqueue(element, priority) {
+    //将元素和优先级封在一起
+    const queueE = new queueElement(element, priority);
+    //将封好的元素放入队列
+    if(this.isEmpty()){
+      this.array.push(queueE);
+    }else{
+      let add = false; //标记是否添加了元素
+      for(let i=0;i<this.array.length;i++){
+        if(this.array[i].priority > queueE.priority){
+          this.array.splice(i, 0, queueE);
+          add = true;
+          break;
+        }
+      }
+      if(!add){
+        this.array.push(queueE);
+      }
+    }
+  }
+}
+
 /**击鼓传花********************************************** */
 //nameList为名字数组，num为数的数字
 function passGame(nameList, num) {
@@ -44,3 +74,13 @@ function passGame(nameList, num) {
 
 const name = [1,2,3,4,5,6];
 console.log(passGame(name, 1));
+
+//测试优先级队列
+const p = new priorityQueue();
+p.enqueue(111,1);
+p.enqueue(333,3);
+p.enqueue(555,5);
+p.enqueue(666,6);
+p.enqueue(222,2);
+p.enqueue(444,4);
+console.log(p.array);
