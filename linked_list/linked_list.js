@@ -97,6 +97,7 @@ class linkedList {
   //remove(element); 从链表中移出一项
   remove(element){
     const position = this.indexOf(element);
+    if(position = -1) return false;
     this.removeAt(position);
   }
   //isEmpty(); 判断链表长度是否为0，为0返回true
