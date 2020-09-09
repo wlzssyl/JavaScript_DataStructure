@@ -58,6 +58,30 @@ class HashTable {
       return null;
     }
   }
+  //remove(key), 根据key值删除元素
+  remove(key) {
+    const index = this.hashFunc(key, this.limit);
+
+    if (!this.storage[index]) {
+      return false;
+    } else {
+      let bucket = this.storage[index];
+      for (let i = 0; i < bucket.length; i++) {
+        let tuple = bucket[i];
+        if (tuple[0] === key) {
+          bucket.splice(i, 1);
+          this.count--;
+          return tuple[1];
+        }
+      }
+    }
+  }
+  isEmpty() {
+    return this.count == 0;
+  }
+  size() {
+    return this.count;
+  }
 }
 
 
@@ -75,3 +99,5 @@ hash.put("gender", "男");
 console.log(hash.storage);
 
 console.log(hash.get('gender'));
+console.log(hash.remove('age'));
+console.log(hash.storage);
