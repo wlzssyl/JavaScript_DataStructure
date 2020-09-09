@@ -41,6 +41,23 @@ class HashTable {
       this.count++;
     }
   }
+  //get(key),获取key对应元素的value
+  get(key) {
+    const index = this.hashFunc(key, this.limit);
+
+    if (!this.storage[index]) {
+      return null;
+    } else {
+      let bucket = this.storage[index];
+      for (let i = 0; i < bucket.length; i++) {
+        if (bucket[i][0] === key) {
+          return bucket[i][1];
+        }
+      }
+
+      return null;
+    }
+  }
 }
 
 
@@ -56,3 +73,5 @@ hash.put("age", 18);
 hash.put("height", 188);
 hash.put("gender", "男");
 console.log(hash.storage);
+
+console.log(hash.get('gender'));
