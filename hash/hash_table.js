@@ -1,3 +1,6 @@
+const max_loadFactor = 0.75;
+const min_loadFactor = 0.25;
+
 class HashTable {
   constructor() {
     this.storage = [];  //哈希表（数组结构）
@@ -39,6 +42,10 @@ class HashTable {
     if (!cover) {
       bucket.push([key, value]);
       this.count++;
+      //判断是否要扩容
+      if (this.count / this.limit > max_loadFactor) {
+        this.resize(2 * this.limit);
+      }
     }
   }
   //get(key),获取key对应元素的value
@@ -71,11 +78,37 @@ class HashTable {
         if (tuple[0] === key) {
           bucket.splice(i, 1);
           this.count--;
+          //判断是否要减容
+          if (this.count < 8 && this.count / this.limit < min_loadFactor) {
+            this.resize(Math.floor(this.limit / 2));
+          }
           return tuple[1];
         }
       }
     }
   }
+  //resize（newLimit）扩容函数
+  resize(newLimit) {
+    //1.保存旧数组内容
+    let oldStorage = this.storage;
+    //2.重置属性
+    this.limit = newLimit;
+    this.storage = [];
+    this.count = 0;
+    //3.取出oldStorage的元素放入storage
+    for (let i = 0; i < oldStorage.length; i++) {
+      let bucket = oldStorage[i];
+      if (!bucket) {
+        continue;
+      }
+      for (let i = 0; i < bucket.length; i++) {
+        let tuple = bucket[i];
+        this.put(tuple[0], tuple[1]);
+      }
+    }
+
+  }
+
   isEmpty() {
     return this.count == 0;
   }
@@ -101,3 +134,15 @@ console.log(hash.storage);
 console.log(hash.get('gender'));
 console.log(hash.remove('age'));
 console.log(hash.storage);
+
+hash.put('aaa', 111)
+hash.put('bbb', 111)
+hash.put('ccc', 111)
+hash.put('ddd', 111)
+hash.put('eee', 111)
+hash.put('fff', 111)
+hash.put('ggg', 111)
+hash.put('hhh', 111)
+hash.put('iii', 111)
+
+console.log(hash)
