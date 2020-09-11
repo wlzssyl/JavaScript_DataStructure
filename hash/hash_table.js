@@ -5,7 +5,7 @@ class HashTable {
   constructor() {
     this.storage = [];  //哈希表（数组结构）
     this.count = 0;     //已存元素个数
-    this.limit = 6;    //哈希表总长
+    this.limit = 7;    //哈希表总长
   }
   /*** 哈希函数（str为要哈希的字符串， max为取余的除数） *********************** */
   hashFunc(str, max) {
@@ -44,7 +44,7 @@ class HashTable {
       this.count++;
       //判断是否要扩容
       if (this.count / this.limit > max_loadFactor) {
-        this.resize(2 * this.limit);
+        this.resize(this.getPrime(2 * this.limit));
       }
     }
   }
@@ -80,7 +80,7 @@ class HashTable {
           this.count--;
           //判断是否要减容
           if (this.count < 8 && this.count / this.limit < min_loadFactor) {
-            this.resize(Math.floor(this.limit / 2));
+            this.resize(this.getPrime(Math.floor(this.limit / 2)));
           }
           return tuple[1];
         }
@@ -108,6 +108,24 @@ class HashTable {
     }
 
   }
+  //isPrime(num),判断数字是否为质数
+  isPrime(num) {
+    let temp = Math.ceil(Math.sqrt(num));
+    for (let i = 2; i <= temp; i++) {
+      if (num % i == 0) {
+        return false;
+      }
+    }
+    return true;
+  }
+  //getPrime(num),将num逐一累加得到质数
+  getPrime(num) {
+    while (!this.isPrime(num)) {
+      num++;
+    }
+    return num;
+  }
+
 
   isEmpty() {
     return this.count == 0;
@@ -116,11 +134,11 @@ class HashTable {
     return this.count;
   }
 }
-
-function isPrime(num) {
+/****************************************************** */
+function Prime(num) {
   let temp = Math.ceil(Math.sqrt(num));
-  for(let i=2;i<=temp;i++){
-    if(num%i == 0){
+  for (let i = 2; i <= temp; i++) {
+    if (num % i == 0) {
       return false;
     }
   }
@@ -143,7 +161,7 @@ console.log(hash.storage);
 
 console.log(hash.get('gender'));
 console.log(hash.remove('age'));
-console.log(hash.storage);
+console.log(hash);
 
 hash.put('aaa', 111)
 hash.put('bbb', 111)
@@ -156,6 +174,6 @@ hash.put('hhh', 111)
 hash.put('iii', 111)
 console.log(hash)
 
-console.log(isPrime(11))
-console.log(isPrime(111))
-console.log(isPrime(97))
+console.log(Prime(11))
+console.log(Prime(111))
+console.log(Prime(97))
