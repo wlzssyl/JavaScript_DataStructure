@@ -117,6 +117,16 @@ class HashTable {
   }
 }
 
+function isPrime(num) {
+  let temp = Math.ceil(Math.sqrt(num));
+  for(let i=2;i<=temp;i++){
+    if(num%i == 0){
+      return false;
+    }
+  }
+  return true;
+
+}
 
 
 // console.log(hashFunc("name", 7));
@@ -144,5 +154,8 @@ hash.put('fff', 111)
 hash.put('ggg', 111)
 hash.put('hhh', 111)
 hash.put('iii', 111)
-
 console.log(hash)
+
+console.log(isPrime(11))
+console.log(isPrime(111))
+console.log(isPrime(97))
