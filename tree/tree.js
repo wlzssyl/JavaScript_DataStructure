@@ -15,32 +15,58 @@ class BinarySearchTree {
   //insert(key),向树中插入新的键
   insert(key) {
     const newNode = new Node(key);
-    if(!this.root){
+    if (!this.root) {
       this.root = newNode;
-    }else{
+    } else {
       this.insertNewNode(this.root, newNode);
     }
   }
-  insertNewNode(root, newNode){
-    if(root.key > newNode.key){
-      if(!root.left){
+  insertNewNode(root, newNode) {
+    if (root.key > newNode.key) {
+      if (!root.left) {
         root.left = newNode;
-      }else{
+      } else {
         this.insertNewNode(root.left, newNode);
       }
-    }else{
-      if(!root.right){
+    } else {
+      if (!root.right) {
         root.right = newNode;
-      }else{
+      } else {
         this.insertNewNode(root.right, newNode);
       }
     }
   }
-
-  //search(key),在树中查找一个键，如果节点存在，则返回true，否则返回false
   //inOrderTraverse, 中序遍历所有节点
+  inOrderTraverse() {
+    this.inOrderTraverseNode(this.root);
+  }
+  inOrderTraverseNode(node) {
+    if (!node) return;
+    this.inOrderTraverseNode(node.left);
+    console.log(node.key);   //访问节点的键值
+    this.inOrderTraverseNode(node.right);
+  }
   //preOrderTraverse, 先序遍历所有节点
+  preOrderTraverse() {
+    this.preOrderTraverseNode(this.root);
+  }
+  preOrderTraverseNode(node) {
+    if (!node) return;
+    console.log(node.key);   //访问节点的键值
+    this.preOrderTraverseNode(node.left);
+    this.preOrderTraverseNode(node.right);
+  }
   //postOrderTraverse, 后序遍历所有节点
+  postOrderTraverse() {
+    this.postOrderTraverseNode(this.root);
+  }
+  postOrderTraverseNode(node) {
+    if (!node) return;
+    this.postOrderTraverseNode(node.left);
+    this.postOrderTraverseNode(node.right);
+    console.log(node.key);   //访问节点的键值
+  }
+  //search(key),在树中查找一个键，如果节点存在，则返回true，否则返回false
   //min,返回树中最小的键值
   //max,返回树中最大的键值
   //remove(key), 从树中移除某个键
@@ -64,3 +90,7 @@ bst.insert(18)
 bst.insert(25)
 bst.insert(6)
 console.log(bst)
+
+// bst.inOrderTraverse();
+// bst.preOrderTraverse();
+bst.postOrderTraverse();
