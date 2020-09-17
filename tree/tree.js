@@ -66,9 +66,23 @@ class BinarySearchTree {
     this.postOrderTraverseNode(node.right);
     console.log(node.key);   //访问节点的键值
   }
-  //search(key),在树中查找一个键，如果节点存在，则返回true，否则返回false
   //min,返回树中最小的键值
+  min() {
+    let node = this.root;
+    while (node.right !== null) {
+      node = node.left;
+    }
+    return node.key;
+  }
   //max,返回树中最大的键值
+  max() {
+    let node = this.root;
+    while (node.right !== null) {
+      node = node.right;
+    }
+    return node.key;
+  }
+  //search(key),在树中查找一个键，如果节点存在，则返回true，否则返回false
   //remove(key), 从树中移除某个键
 }
 /****************************************************** */
@@ -94,3 +108,6 @@ console.log(bst)
 // bst.inOrderTraverse();
 // bst.preOrderTraverse();
 bst.postOrderTraverse();
+
+console.log(bst.min());
+console.log(bst.max());
