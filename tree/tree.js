@@ -83,6 +83,19 @@ class BinarySearchTree {
     return node.key;
   }
   //search(key),在树中查找一个键，如果节点存在，则返回true，否则返回false
+  search(key) {
+    return this.searchNode(this.root, key);
+  }// 注意：不用递归，用while循环也可以实现
+  searchNode(node, key) {
+    if(node == null) return false;
+    if(key < node.key){
+      return this.searchNode(node.left, key);
+    }else if(key > node.key){
+      return this.searchNode(node.right, key);
+    }else{
+      return true;
+    }
+  }
   //remove(key), 从树中移除某个键
 }
 /****************************************************** */
@@ -111,3 +124,5 @@ bst.postOrderTraverse();
 
 console.log(bst.min());
 console.log(bst.max());
+console.log(bst.search(3));
+console.log(bst.search(24));
