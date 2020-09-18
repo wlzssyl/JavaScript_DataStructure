@@ -97,6 +97,26 @@ class BinarySearchTree {
     }
   }
   //remove(key), 从树中移除某个键
+  remove(key) {
+    let current = this.root;
+    let parent = null;
+    let isLeft = true;
+    while(current.key != key){
+      if(key < current.key) {
+        parent = current;
+        current = current.left;
+        isLeft = true;
+      }else{
+        parent = current;
+        current = current.right;
+        isLeft = false; 
+      }
+      if(current == null) return false;
+    } 
+    //找到key
+    
+    return true;
+  }
 }
 /****************************************************** */
 
