@@ -87,12 +87,12 @@ class BinarySearchTree {
     return this.searchNode(this.root, key);
   }// 注意：不用递归，用while循环也可以实现
   searchNode(node, key) {
-    if(node == null) return false;
-    if(key < node.key){
+    if (node == null) return false;
+    if (key < node.key) {
       return this.searchNode(node.left, key);
-    }else if(key > node.key){
+    } else if (key > node.key) {
       return this.searchNode(node.right, key);
-    }else{
+    } else {
       return true;
     }
   }
@@ -100,21 +100,49 @@ class BinarySearchTree {
   remove(key) {
     let current = this.root;
     let parent = null;
-    let isLeft = true;
-    while(current.key != key){
-      if(key < current.key) {
+    let isLeftChild = true;
+    while (current.key != key) {
+      if (key < current.key) {
         parent = current;
         current = current.left;
-        isLeft = true;
-      }else{
+        isLeftChild = true;
+      } else {
         parent = current;
         current = current.right;
-        isLeft = false; 
+        isLeftChild = false;
       }
-      if(current == null) return false;
-    } 
+      if (current == null) return false;
+    }
     //找到key
-    
+    //1.删除的节点是叶子节点
+    if (current.left === null && current.right === null) {
+      if (current == this.root) {
+        this.root = null;
+      } else if (isLeftChild) {
+        parent.left = null;
+      } else {
+        parent.right = null;
+      }
+    }
+    //2.删除的节点有一个字节点（左或右）
+    else if (current.left === null) {//只有右子节点
+      if (current == this.root) {
+        this.root = current.right;
+      } else if (isLeftChild) {
+        parent.left = current.right;
+      } else {
+        parent.right = current.right;
+      }
+    } else if (current.right === null) {//只有左子节点
+      if (current == this.root) {
+        this.root = current.left;
+      } else if (isLeftChild) {
+        parent.left = current.left;
+      } else {
+        parent.right = current.left;
+      }
+    }
+    //3.删除的节点有左右子节点
     return true;
   }
 }
@@ -146,3 +174,6 @@ console.log(bst.min());
 console.log(bst.max());
 console.log(bst.search(3));
 console.log(bst.search(24));
+
+bst.remove(3);
+console.log(bst);
