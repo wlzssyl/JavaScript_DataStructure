@@ -143,7 +143,29 @@ class BinarySearchTree {
       }
     }
     //3.删除的节点有左右子节点
+
     return true;
+  }
+  getSuccessor(delNode){//这里寻找删除节点的后继节点， 前驱节点类似
+    //1.初始变量，success后继节点等
+    let parentSuccess = delNode;
+    let success = delNode;
+    let current = delNode.right;
+    //2.找右子树的左子节点
+    while(current != null){ //直到current没有左子节点时停止寻找
+      parentSuccess = success;
+      success = current;
+      current = current.left;
+    }
+    //3.如果此时success有右子节点，需要把该右子节点连给parentSuccess的左子节点，
+    //同时把删除节点delNode的右节点连给success右子节点
+    if(success != delNode.right){//即后继节点不是删除节点右子节点时
+      parentSuccess.left = success.right;
+      success.right = delNode.right;
+    }
+
+    return success;
+    
   }
 }
 /****************************************************** */
