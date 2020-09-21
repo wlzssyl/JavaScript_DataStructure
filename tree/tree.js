@@ -98,7 +98,7 @@ class BinarySearchTree {
   }
   //remove(key), 从树中移除某个键
   remove(key) {
-    let current = this.root;
+    let current = this.root; //current是当前根据key找到的要删除的节点
     let parent = null;
     let isLeftChild = true;
     while (current.key != key) {
@@ -143,29 +143,43 @@ class BinarySearchTree {
       }
     }
     //3.删除的节点有左右子节点
+    else {
+      //获取key的后继节点
+      let successor = this.getSuccessor(current);
+
+      if(current == this.root){
+        this.root = successor;
+      }else if(isLeftChild){
+        parent.left = successor;
+      }else{
+        parent.right = successor;
+      }
+      //最后把successor的左子节点连好
+      successor.left = current.left;
+    }
 
     return true;
   }
-  getSuccessor(delNode){//这里寻找删除节点的后继节点， 前驱节点类似
+  getSuccessor(delNode) {//这里寻找删除节点的后继节点， 前驱节点类似
     //1.初始变量，success后继节点等
     let parentSuccess = delNode;
     let success = delNode;
     let current = delNode.right;
     //2.找右子树的左子节点
-    while(current != null){ //直到current没有左子节点时停止寻找
+    while (current != null) { //直到current没有左子节点时停止寻找
       parentSuccess = success;
       success = current;
       current = current.left;
     }
     //3.如果此时success有右子节点，需要把该右子节点连给parentSuccess的左子节点，
     //同时把删除节点delNode的右节点连给success右子节点
-    if(success != delNode.right){//即后继节点不是删除节点右子节点时
+    if (success != delNode.right) {//即后继节点不是删除节点右子节点时
       parentSuccess.left = success.right;
       success.right = delNode.right;
     }
 
     return success;
-    
+
   }
 }
 /****************************************************** */
@@ -190,12 +204,12 @@ console.log(bst)
 
 // bst.inOrderTraverse();
 // bst.preOrderTraverse();
-bst.postOrderTraverse();
+// bst.postOrderTraverse();
 
 console.log(bst.min());
 console.log(bst.max());
 console.log(bst.search(3));
 console.log(bst.search(24));
 
-bst.remove(3);
-console.log(bst);
+console.log(bst.remove(11));
+bst.inOrderTraverse();
