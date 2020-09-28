@@ -13,7 +13,7 @@ class ArrayList {
   /**
    * 冒泡排序
    *  - 两两比较，将其中的大者换在后面，依次将所有数据比完
-   *    即每轮完成就
+   *    即每轮完成就将一个最大数放在后面
    *  - 冒泡排序比较次数为N(N-1)/2,则大O表示法为O(N²)
    *    冒泡排序交换次数也为O(N²)
    */
@@ -53,7 +53,22 @@ class ArrayList {
     }
 
   }
-
+  /**
+   * 插入排序
+   *  - 
+   */
+  insertionSort() {
+    for (let i = 1; i < this.array.length; i++) {
+      let temp = this.array[i];
+      let j = i;
+      while (temp < this.array[j - 1] && j > 0) {//因为未知循环次数，这里要用while循环
+        this.array[j] = this.array[j - 1];
+        j--;
+      }
+      //此时j为当前i对应的值应该放的位置
+      this.array[j] = temp;
+    }
+  }
 }
 /******************************* */
 let arr = new ArrayList()
@@ -69,5 +84,6 @@ arr.insert(101);
 console.log(arr);
 
 // arr.bubbleSort();
-arr.selectionSort();
+// arr.selectionSort();
+arr.insertionSort();
 arr.toString();
