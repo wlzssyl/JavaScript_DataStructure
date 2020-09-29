@@ -74,6 +74,30 @@ class ArrayList {
       this.array[j] = temp;
     }
   }
+  /**
+   * 希尔排序
+   *  - 
+   */
+  shellSort() {
+    let length = this.array.length;
+    let gap = Math.floor(length / 2);
+    //间隔gap逐步减小
+    while (gap >= 1) {
+      //分组并插入排序
+      for (let i = gap; i < length; i++) {
+        let temp = this.array[i];
+        let j = i;
+        while (this.array[j - gap] > temp && j >= gap) {
+          this.array[j] = this.array[j - gap];
+          j -= gap;
+        }
+        //此时找到位置并插入
+        this.array[j] = temp;
+      }
+      //每轮结束后gap/2
+      gap = Math.floor(gap / 2);
+    }
+  }
 }
 /******************************* */
 let arr = new ArrayList()
@@ -90,5 +114,6 @@ console.log(arr);
 
 // arr.bubbleSort();
 // arr.selectionSort();
-arr.insertionSort();
+// arr.insertionSort();
+arr.shellSort();
 arr.toString();
