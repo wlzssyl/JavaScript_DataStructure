@@ -119,14 +119,73 @@ class ArrayList {
    *      至此一轮结束，小于枢纽的数都在枢纽左边，大于枢纽的数都在枢纽右边。
    *  
    */
-  
-  //枢纽pivot的获取
-  pivot(left, right) {
-    //1.获取中间位置
-    //2.排序获得中位数作为枢纽
+  quickSort() {
+    //quick函数为递归调用函数
+    this.quick(0, this.array.length - 1);
+  }
+  quick(left, right) {
+    //1.结束条件
+    if (left >= right) return
+    //2.获取枢纽
+    let pivot = this.pivot(left, right);
+    if (pivot == -1) return
+    //3.进行快排交换
+    let i = left;
+    let j = right - 1;
+    console.log(i + '-' + j)
+    console.log(pivot)
+    while (1) {
+      while (this.array[i] <= pivot && i < j) {
+        i++;
+      }
+      while (this.array[j] >= pivot && i < j) {
+        j--;
+      }
+      if (i < j) {
+        this.swap(i, j);
+        console.log(i + '-' + j)
+      } else {
+        break;
+      }
+      //跳出循环条件
+
+    }
+    //4.将枢纽放在i的位置上
+    this.swap(i, right - 1);
+    //5.分而治之，递归调用
+    this.quick(left, i - 1);
+    console.log(right)
+    this.quick(i + 1, right);
   }
 
+  //枢纽pivot的获取,left/right为首尾的下标值（索引值）
+  pivot(left, right) {
+    
+      //1.获取中间位置
+      let center = Math.floor((left + right) / 2);
+    //2.排序获得中位数作为枢纽
+    if (this.array[left] > this.array[center]) {
+      this.swap(left, center);
+    }
+    if (this.array[center] > this.array[right]) {
+      this.swap(center, right);
+    }
+    if (this.array[left] > this.array[center]) {
+      this.swap(left, center);
+    }
+    //将枢纽放到right-1的位置
+    this.swap(center, right - 1);
+
+    return this.array[right - 1]
+
+  }
+  swap(el1, el2) {
+    let temp = this.array[el1];
+    this.array[el1] = this.array[el2];
+    this.array[el2] = temp;
+  }
 }
+
 /******************************* */
 let arr = new ArrayList()
 arr.insert(111);
@@ -143,5 +202,8 @@ console.log(arr);
 // arr.bubbleSort();
 // arr.selectionSort();
 // arr.insertionSort();
-arr.shellSort();
+// arr.shellSort();
+arr.quickSort();
+
+// arr.pivot(0, arr.array.length - 1);
 arr.toString();
